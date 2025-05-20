@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work - Writing Wall</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    nav {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    nav h1 {
+      font-size: 1.5rem;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul li a {
+      color: #555;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    nav ul li a:hover {
+      color: #000;
+    }
+    .container {
+      flex: 1;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    .note-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .note-form textarea {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      min-height: 100px;
+    }
+    .note-form button {
+      align-self: flex-end;
+      background: #0077ff;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .note-form button:hover {
+      background: #005dd1;
+    }
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .note-card {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .note-card time {
+      font-size: 0.85rem;
+      color: #999;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .note-card p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+      font-size: 0.9rem;
+      border-top: 1px solid #e0e0e0;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #333;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        background: #fff;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        display: none;
+      }
+
+      nav ul.active {
+      display: flex;
+      }
+
+      .menu-toggle {
+      display: flex;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>KM</h1>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+   <ul id="menu">
+  <li><a href="/personal-website/">Home</a></li>
+  <li><a href="/personal-website/achievement/">Achievement</a></li>
+  <li><a href="/personal-website/hobby/">Hobby</a></li>
+  <li><a href="/personal-website/work/">Work</a></li>
+</ul>
+  </nav>
+
+  <div class="container">
+    <h2>Writing Wall</h2>
+    <div class="note-form">
+      <textarea id="noteInput" placeholder="Tulis catatan atau ide kamu..."></textarea>
+      <button id="saveNoteBtn">Simpan ✍️</button>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Khamim Maezun
+  </footer>
+
+  <!-- Firebase SDK (via ES Modules) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBt8wZmfW3CCZ0MBWy52ShDXNC0oWFzqCs",
+      authDomain: "writing-wall.firebaseapp.com",
+      projectId: "writing-wall",
+      storageBucket: "writing-wall.firebasestorage.app",
+      messagingSenderId: "531273012473",
+      appId: "1:531273012473:web:6bfde44e729632c7363e28",
+      measurementId: "G-WRHSQDT23P"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const input = document.getElementById("noteInput");
+    const list = document.getElementById("notesList");
+    const btn = document.getElementById("saveNoteBtn");
+
+    async function addNote() {
+      const content = input.value.trim();
+      if (!content) return;
+      await addDoc(collection(db, "notes"), {
+        text: content,
+        createdAt: new Date()
+      });
+      input.value = "";
+      loadNotes();
+    }
+
+    async function loadNotes() {
+      list.innerHTML = "";
+      const q = query(collection(db, "notes"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(doc => {
+        const note = doc.data();
+        const card = document.createElement("div");
+        card.className = "note-card";
+
+        const time = document.createElement("time");
+        time.textContent = new Date(note.createdAt.seconds * 1000).toLocaleString();
+
+        const p = document.createElement("p");
+        p.textContent = note.text;
+
+        card.appendChild(time);
+        card.appendChild(p);
+        list.appendChild(card);
+      });
+    }
+
+    btn.addEventListener("click", addNote);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        addNote();
+      }
+    });
+
+    loadNotes();
+
+
+    const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+  });
+
+
+    
+  </script>
+</body>
+</html>

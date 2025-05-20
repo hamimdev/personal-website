@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khamim Maezun - Achievement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: #ffffff;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #333;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: #555;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      color: #000;
+    }
+
+    .hero {
+      padding: 4rem 2rem 2rem;
+      flex: 1;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 280px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #222;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background-color: #fff;
+        flex-direction: column;
+        width: 200px;
+        border: 1px solid #ccc;
+        display: none;
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>KM</h1>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="menu">
+      <li><a href="/personal-website/">Home</a></li>
+      <li><a href="/personal-website/achievement/">Achievement</a></li>
+      <li><a href="/personal-website/hobby/">Hobby</a></li>
+      <li><a href="/personal-website/work/">Work</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h2 style="text-align:center; font-size: 2rem; font-weight: 600;">Achievements</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Poster Icon">
+        <h3>Juara 1</h3>
+        <p>Menang.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Hackathon Icon">
+        <h3>Ha </h3>
+        <p>Berhasil masuk .</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968866.png" alt="GitHub Icon">
+        <h3>Kontributor</h3>
+        <p>Aktif berkontribusi .</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" alt="Mentor Icon">
+        <h3>School</h3>
+        <p>Menjadi .</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Khamim Maezun
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

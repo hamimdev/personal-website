@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khamim Maezun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: #ffffff;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #333;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 1rem;
+    }
+
+    nav ul li a:hover {
+      color: #000;
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      animation: fadeIn 1.2s ease-out;
+      flex-direction: column;
+    }
+
+    .hero img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      margin-bottom: 2rem;
+    }
+
+    .hero-text h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background-color: #fff;
+        flex-direction: column;
+        width: 200px;
+        border: 1px solid #ccc;
+        display: none;
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>KM</h1>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="menu">
+      <li><a href="/personal-website/">Home</a></li>
+      <li><a href="/personal-website/achievement/">Achievement</a></li>
+      <li><a href="/personal-website/hobby/">Hobby</a></li>
+      <li><a href="/personal-website/work/">Work</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <img src="still.webp"
+         data-animate="anim.webp"
+         data-still="still.webp"
+         alt="Foto Profil" id="profile-img" />
+    <div class="hero-text">
+      <h2>Hello, I'm Khamim</h2>
+      <p>Adventurer, learner, and a curious soul passionate about technology, education, and running free under the sky.</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Khamim Maezun
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+
+    const img = document.getElementById('profile-img');
+    let hoverTimeout;
+
+    img.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimeout);
+      img.src = img.dataset.animate;
+    });
+
+    img.addEventListener('mouseleave', () => {
+      hoverTimeout = setTimeout(() => {
+        img.src = img.dataset.still;
+      }, 800);
+    });
+  </script>
+</body>
+</html>
